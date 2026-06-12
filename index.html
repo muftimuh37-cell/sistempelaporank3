@@ -263,63 +263,6 @@
         .stat-info h3 { font-size: 26px; font-weight: 700; margin-bottom: 2px; line-height: 1; }
         .stat-info p  { font-size: 12px; color: var(--text-muted); font-weight: 500; }
 
-        /* ===== EXECUTIVE DASHBOARD UTILITIES =====
-           Kelas-kelas berikut menggantikan inline style yang sebelumnya
-           berulang puluhan kali di renderAreaDashboard(), agar konsisten
-           dengan design token dan mudah disesuaikan untuk rebranding. */
-        .exec-header {
-            display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
-        }
-        .exec-title    { font-size: 18px; font-weight: 700; color: var(--sidebar-bg); margin: 0; }
-        .exec-subtitle { font-size: 12px; color: var(--text-muted); margin: 4px 0 0; }
-        .exec-badges   { display: flex; gap: 8px; flex-wrap: wrap; }
-        .pill {
-            border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 600;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .pill-danger  { background: var(--danger-light);  color: var(--danger); }
-        .pill-warning { background: var(--warning-light); color: var(--warning); }
-
-        .kpi-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 14px; margin-bottom: 20px;
-        }
-        .kpi-card {
-            background: var(--surface); border-radius: var(--radius-lg); padding: 20px 18px;
-            border: 1px solid var(--border); border-top: 4px solid var(--kpi-accent, var(--primary));
-            box-shadow: var(--shadow-sm);
-        }
-        .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: .07em; color: var(--text-muted); font-weight: 700; margin: 0 0 8px; }
-        .kpi-value { font-size: 34px; font-weight: 700; margin: 0; color: var(--kpi-accent, var(--primary)); }
-        .kpi-sub   { font-size: 12px; color: var(--text-muted); margin: 6px 0 0; }
-
-        .card-subtitle    { font-size: 12px; color: var(--text-muted); margin: -8px 0 14px; }
-        .section-title-row {
-            display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; gap: 8px; margin-bottom: 16px;
-        }
-        .section-title-row h3 { margin: 0; }
-
-        .chart-legend     { display: flex; justify-content: center; gap: 16px; margin-top: 12px; flex-wrap: wrap; }
-        .chart-legend-row { display: flex; gap: 16px; margin: -8px 0 12px; flex-wrap: wrap; }
-        .legend-item { font-size: 12px; display: flex; align-items: center; gap: 5px; }
-        .legend-dot  { width: 10px; height: 10px; border-radius: 2px; display: inline-block; background: var(--dot-color, currentColor); }
-        .legend-dot.round { border-radius: 50%; }
-
-        .perf-legend { display: flex; gap: 16px; font-size: 11px; color: var(--text-muted); }
-        .perf-legend .dot { font-weight: 700; }
-        .perf-legend .dot.success { color: var(--success); }
-        .perf-legend .dot.warning { color: var(--warning); }
-        .perf-legend .dot.danger  { color: var(--danger); }
-
-        .perf-bar-wrap  { display: flex; align-items: center; gap: 8px; }
-        .perf-bar-track { flex: 1; background: var(--border); border-radius: 8px; height: 7px; overflow: hidden; }
-        .perf-bar-fill  { height: 100%; border-radius: 8px; transition: width 0.6s; background: var(--bar-color, var(--primary)); }
-        .perf-pct       { min-width: 38px; text-align: right; }
-
-        .text-center { text-align: center; }
-
         /* ===== BADGES ===== */
         .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; background: var(--bg); color: var(--text-muted); }
         .badge-success { background: var(--success-light); color: #065f46; }
@@ -2080,18 +2023,18 @@ function renderAreaDashboard() {
         const barColor = pctNum >= 80 ? '#059669' : pctNum >= 50 ? '#d97706' : '#dc2626';
         return `<tr>
             <td><strong>${esc(p.tenant)}</strong></td>
-            <td class="text-center">${p.total}</td>
-            <td class="text-center">${p.done}</td>
+            <td style="text-align:center;">${p.total}</td>
+            <td style="text-align:center;">${p.done}</td>
             <td>
-                <div class="perf-bar-wrap">
-                    <div class="perf-bar-track">
-                        <div class="perf-bar-fill" style="width:${pctNum}%;--bar-color:${barColor};"></div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="flex:1;background:var(--border);border-radius:8px;height:7px;overflow:hidden;">
+                        <div style="width:${pctNum}%;height:100%;background:${barColor};border-radius:8px;transition:width 0.6s;"></div>
                     </div>
-                    <span class="${pClass} perf-pct">${p.pct}%</span>
+                    <span class="${pClass}" style="min-width:38px;text-align:right;">${p.pct}%</span>
                 </div>
             </td>
-            <td class="text-center ${aClass}">${p.avg === '—' ? '—' : p.avg + ' hr'}</td>
-            <td class="text-center ${hClass}">${p.highOpen}</td>
+            <td style="text-align:center;" class="${aClass}">${p.avg === '—' ? '—' : p.avg + ' hr'}</td>
+            <td style="text-align:center;" class="${hClass}">${p.highOpen}</td>
         </tr>`;
     }).join('');
 
@@ -2101,47 +2044,47 @@ function renderAreaDashboard() {
     document.getElementById('dynamicContent').innerHTML = `
 
     <!-- ===== EXECUTIVE HEADER ===== -->
-    <div class="exec-header">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
         <div>
-            <h2 class="exec-title">Executive Safety Dashboard</h2>
-            <p class="exec-subtitle">IWIP 4 Life — Kawasan Industri &nbsp;·&nbsp; Per ${now}</p>
+            <h2 style="font-size:18px;font-weight:700;color:var(--sidebar-bg);margin:0;">Executive Safety Dashboard</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin:4px 0 0;">IWIP 4 Life — Kawasan Industri &nbsp;·&nbsp; Per ${now}</p>
         </div>
-        <div class="exec-badges">
-            <span class="pill pill-danger">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <span style="background:var(--danger-light);color:var(--danger);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;">
                 <i class="fas fa-exclamation-circle"></i> ${highRisk} Risiko Tinggi Aktif
             </span>
-            <span class="pill pill-warning">
+            <span style="background:var(--warning-light);color:var(--warning);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;">
                 <i class="fas fa-clock"></i> ${openAll} Belum Selesai
             </span>
         </div>
     </div>
 
     <!-- ===== KPI CARDS (row 1) ===== -->
-    <div class="kpi-grid">
-        <div class="kpi-card" style="--kpi-accent:var(--primary);">
-            <p class="kpi-label">Total Laporan</p>
-            <h2 class="kpi-value">${total}</h2>
-            <p class="kpi-sub">${openAll} masih terbuka</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-bottom:20px;">
+        <div style="background:var(--surface);border-radius:var(--radius-lg);padding:20px 18px;border:1px solid var(--border);border-top:4px solid var(--primary);box-shadow:var(--shadow-sm);">
+            <p style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);font-weight:700;margin:0 0 8px;">Total Laporan</p>
+            <h2 style="font-size:34px;font-weight:700;margin:0;color:var(--primary);">${total}</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin:6px 0 0;">${openAll} masih terbuka</p>
         </div>
-        <div class="kpi-card" style="--kpi-accent:var(--success);">
-            <p class="kpi-label">Tingkat Penyelesaian</p>
-            <h2 class="kpi-value">${rate}%</h2>
-            <p class="kpi-sub">${done} dari ${total} selesai</p>
+        <div style="background:var(--surface);border-radius:var(--radius-lg);padding:20px 18px;border:1px solid var(--border);border-top:4px solid var(--success);box-shadow:var(--shadow-sm);">
+            <p style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);font-weight:700;margin:0 0 8px;">Tingkat Penyelesaian</p>
+            <h2 style="font-size:34px;font-weight:700;margin:0;color:var(--success);">${rate}%</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin:6px 0 0;">${done} dari ${total} selesai</p>
         </div>
-        <div class="kpi-card" style="--kpi-accent:var(--warning);">
-            <p class="kpi-label">Rata-rata Waktu Selesai</p>
-            <h2 class="kpi-value">${avgDays}</h2>
-            <p class="kpi-sub">${avgDays !== '—' ? 'hari per laporan' : 'belum ada data'}</p>
+        <div style="background:var(--surface);border-radius:var(--radius-lg);padding:20px 18px;border:1px solid var(--border);border-top:4px solid var(--warning);box-shadow:var(--shadow-sm);">
+            <p style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);font-weight:700;margin:0 0 8px;">Rata-rata Waktu Selesai</p>
+            <h2 style="font-size:34px;font-weight:700;margin:0;color:var(--warning);">${avgDays}</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin:6px 0 0;">${avgDays !== '—' ? 'hari per laporan' : 'belum ada data'}</p>
         </div>
-        <div class="kpi-card" style="--kpi-accent:var(--danger);">
-            <p class="kpi-label">Risiko Tinggi Aktif</p>
-            <h2 class="kpi-value">${highRisk}</h2>
-            <p class="kpi-sub">perlu penanganan segera</p>
+        <div style="background:var(--surface);border-radius:var(--radius-lg);padding:20px 18px;border:1px solid var(--border);border-top:4px solid var(--danger);box-shadow:var(--shadow-sm);">
+            <p style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);font-weight:700;margin:0 0 8px;">Risiko Tinggi Aktif</p>
+            <h2 style="font-size:34px;font-weight:700;margin:0;color:var(--danger);">${highRisk}</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin:6px 0 0;">perlu penanganan segera</p>
         </div>
-        <div class="kpi-card" style="--kpi-accent:#7c3aed;">
-            <p class="kpi-label">Jumlah Tenant Aktif</p>
-            <h2 class="kpi-value">${tenants.length}</h2>
-            <p class="kpi-sub">perusahaan di kawasan</p>
+        <div style="background:var(--surface);border-radius:var(--radius-lg);padding:20px 18px;border:1px solid var(--border);border-top:4px solid #7c3aed;box-shadow:var(--shadow-sm);">
+            <p style="font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-muted);font-weight:700;margin:0 0 8px;">Jumlah Tenant Aktif</p>
+            <h2 style="font-size:34px;font-weight:700;margin:0;color:#7c3aed;">${tenants.length}</h2>
+            <p style="font-size:12px;color:var(--text-muted);margin:6px 0 0;">perusahaan di kawasan</p>
         </div>
     </div>
 
@@ -2150,18 +2093,18 @@ function renderAreaDashboard() {
         <div class="card" style="flex:1;min-width:240px;">
             <h3><i class="fas fa-shield-alt"></i> Distribusi Tingkat Risiko</h3>
             <div class="chart-container" style="min-height:220px;"><canvas id="riskDonutChart"></canvas></div>
-            <div class="chart-legend">
-                <span class="legend-item"><span class="legend-dot" style="--dot-color:#dc2626;"></span>Tinggi (${riskTinggiTotal})</span>
-                <span class="legend-item"><span class="legend-dot" style="--dot-color:#d97706;"></span>Sedang (${riskSedangTotal})</span>
-                <span class="legend-item"><span class="legend-dot" style="--dot-color:#059669;"></span>Rendah (${riskRendahTotal})</span>
+            <div style="display:flex;justify-content:center;gap:16px;margin-top:12px;flex-wrap:wrap;">
+                <span style="font-size:12px;display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#dc2626;display:inline-block;"></span>Tinggi (${riskTinggiTotal})</span>
+                <span style="font-size:12px;display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#d97706;display:inline-block;"></span>Sedang (${riskSedangTotal})</span>
+                <span style="font-size:12px;display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#059669;display:inline-block;"></span>Rendah (${riskRendahTotal})</span>
             </div>
         </div>
         <div class="card" style="flex:1;min-width:240px;">
             <h3><i class="fas fa-exclamation-triangle"></i> Tipe Temuan (Unsafe Condition vs Act)</h3>
             <div class="chart-container" style="min-height:220px;"><canvas id="typeDonutChart"></canvas></div>
-            <div class="chart-legend">
-                <span class="legend-item"><span class="legend-dot" style="--dot-color:#0e7490;"></span>Unsafe Condition (${unsafeCond})</span>
-                <span class="legend-item"><span class="legend-dot" style="--dot-color:#f59e0b;"></span>Unsafe Act (${unsafeAct})</span>
+            <div style="display:flex;justify-content:center;gap:16px;margin-top:12px;flex-wrap:wrap;">
+                <span style="font-size:12px;display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#0e7490;display:inline-block;"></span>Unsafe Condition (${unsafeCond})</span>
+                <span style="font-size:12px;display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#f59e0b;display:inline-block;"></span>Unsafe Act (${unsafeAct})</span>
             </div>
         </div>
         <div class="card" style="flex:1;min-width:240px;">
@@ -2173,7 +2116,7 @@ function renderAreaDashboard() {
     <!-- ===== ROW 2: Laporan per Tenant (Horizontal Bar) ===== -->
     <div class="card">
         <h3><i class="fas fa-building"></i> Total Laporan per Tenant / Perusahaan</h3>
-        <p class="card-subtitle">Menampilkan jumlah laporan yang sudah selesai dan yang masih terbuka per perusahaan.</p>
+        <p style="font-size:12px;color:var(--text-muted);margin:-8px 0 14px;">Menampilkan jumlah laporan yang sudah selesai dan yang masih terbuka per perusahaan.</p>
         <div class="chart-container" style="min-height:${Math.max(200, tenants.length * 52)}px;">
             <canvas id="tenantHBarChart"></canvas>
         </div>
@@ -2183,27 +2126,27 @@ function renderAreaDashboard() {
     <div class="row-charts" style="margin-bottom:0;">
         <div class="card" style="flex:2;min-width:280px;">
             <h3><i class="fas fa-chart-line"></i> Tren Laporan Masuk (Bulanan)</h3>
-            <div class="chart-legend-row">
-                <span class="legend-item"><span class="legend-dot round" style="--dot-color:#059669;"></span>Close (Selesai)</span>
-                <span class="legend-item"><span class="legend-dot round" style="--dot-color:#dc2626;"></span>Open (Terbuka)</span>
+            <div style="display:flex;gap:16px;margin:-8px 0 12px;flex-wrap:wrap;">
+                <span style="font-size:12px;display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#059669;display:inline-block;"></span>Close (Selesai)</span>
+                <span style="font-size:12px;display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:#dc2626;display:inline-block;"></span>Open (Terbuka)</span>
             </div>
             <div class="chart-container" style="min-height:200px;"><canvas id="trendChart"></canvas></div>
         </div>
         <div class="card" style="flex:2;min-width:280px;">
             <h3><i class="fas fa-sort-amount-down"></i> Analisis Pareto — Kontribusi per Tenant</h3>
-            <p class="card-subtitle">80% laporan biasanya berasal dari 20% tenant — fokus di batang tertinggi.</p>
+            <p style="font-size:12px;color:var(--text-muted);margin:-8px 0 14px;">80% laporan biasanya berasal dari 20% tenant — fokus di batang tertinggi.</p>
             <div class="chart-container" style="min-height:200px;"><canvas id="paretoChart"></canvas></div>
         </div>
     </div>
 
     <!-- ===== ROW 4: Tabel Kinerja Ringkas ===== -->
     <div class="card">
-        <div class="section-title-row">
-            <h3><i class="fas fa-table"></i> Ringkasan Kinerja K3 per Tenant</h3>
-            <div class="perf-legend">
-                <span><span class="dot success">●</span> Baik (≥80%)</span>
-                <span><span class="dot warning">●</span> Perlu Perhatian (50–79%)</span>
-                <span><span class="dot danger">●</span> Kritis (&lt;50%)</span>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+            <h3 style="margin:0;"><i class="fas fa-table"></i> Ringkasan Kinerja K3 per Tenant</h3>
+            <div style="display:flex;gap:16px;font-size:11px;color:var(--text-muted);">
+                <span><span style="color:var(--success);font-weight:700;">●</span> Baik (≥80%)</span>
+                <span><span style="color:var(--warning);font-weight:700;">●</span> Perlu Perhatian (50–79%)</span>
+                <span><span style="color:var(--danger);font-weight:700;">●</span> Kritis (&lt;50%)</span>
             </div>
         </div>
         <div class="table-responsive">
@@ -2211,16 +2154,15 @@ function renderAreaDashboard() {
                 <thead>
                     <tr>
                         <th>Perusahaan / Tenant</th>
-                        <th class="text-center">Total</th>
-                        <th class="text-center">Selesai</th>
+                        <th style="text-align:center;">Total</th>
+                        <th style="text-align:center;">Selesai</th>
                         <th style="min-width:160px;">Penyelesaian</th>
-                        <th class="text-center">Rata-rata Waktu</th>
-                        <th class="text-center">Risiko Tinggi Aktif</th>
+                        <th style="text-align:center;">Rata-rata Waktu</th>
+                        <th style="text-align:center;">Risiko Tinggi Aktif</th>
                     </tr>
                 </thead>
                 <tbody>${perfRows}</tbody>
             </table>
-
         </div>
     </div>`;
 
